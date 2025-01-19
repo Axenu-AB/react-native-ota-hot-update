@@ -1,5 +1,6 @@
 #import "OtaHotUpdate.h"
 #import <SSZipArchive/SSZipArchive.h>
+#import <React/RCTBundleURLProvider.h>
 @implementation OtaHotUpdate
 RCT_EXPORT_MODULE()
 
@@ -95,7 +96,11 @@ RCT_EXPORT_MODULE()
        NSURL *fileURL = [NSURL fileURLWithPath:retrievedString];
        return fileURL;
     } else {
-        return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+        #if DEBUG
+        return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"];
+        #else
+         return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+        #endif
     }
 }
 
