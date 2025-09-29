@@ -45,8 +45,6 @@ async function resetApp() {
 }
 function removeBundle(restartAfterRemoved?: boolean) {
   deleteBundlePath().then((data) => {
-    console.log('removeBundle', data);
-
     if (data && restartAfterRemoved) {
       setTimeout(() => {
         resetApp();
@@ -62,7 +60,6 @@ async function setBundleAsActive(
   restartAfterSet?: boolean
 ) {
   setupBundlePath(filePath).then((success) => {
-    console.log('setBundleAsActive', success);
     if (success) {
       setCurrentVersion(version);
       if (restartAfterSet) {
@@ -76,9 +73,7 @@ async function setBundleAsActive(
 
 export default {
   setupBundlePath,
-  // setupExactBundlePath,
   removeUpdate: removeBundle,
-  // downloadBundleUri,
   resetApp,
   getCurrentVersion: getVersionAsNumber,
   setCurrentVersion,

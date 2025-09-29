@@ -53,18 +53,30 @@ class OtaHotUpdate(context: Context?) : TurboReactPackage() {
       }
     }
     private var mContext: Context? = null
-    val bundleJS: String
-      get() {
-        if (mContext == null) {
-          return DEFAULT_BUNDLE
+    // val bundleJS: String
+    //   get() {
+    //     if (mContext == null) {
+    //       return DEFAULT_BUNDLE
+    //     }
+    //     val sharedPrefs = SharedPrefs(mContext!!)
+    //     val pathBundle = sharedPrefs.getString(PATH)
+    //     val currentVersionName = sharedPrefs.getString(CURRENT_VERSION_NAME)
+    //     if (pathBundle == "" || (!currentVersionName.isNullOrEmpty() && currentVersionName != mContext?.getPackageInfo()?.versionName)) {
+    //       return DEFAULT_BUNDLE
+    //     }
+    //     return pathBundle!!
+    //   }
+    fun bundleJS(context: Context): String {
+      val sharedPrefs = SharedPrefs(context)
+      val pathBundle = sharedPrefs.getString(PATH)
+      val currentVersionName = sharedPrefs.getString(CURRENT_VERSION_NAME)
+      if (pathBundle == "" || (!currentVersionName.isNullOrEmpty() && currentVersionName != context?.getPackageInfo()?.versionName)) {
+        if (pathBundle != "") {
+          sharedPrefs.putString(PATH, "")
         }
-        val sharedPrefs = SharedPrefs(mContext!!)
-        val pathBundle = sharedPrefs.getString(PATH)
-        val currentVersionName = sharedPrefs.getString(CURRENT_VERSION_NAME)
-        if (pathBundle == "" || (!currentVersionName.isNullOrEmpty() && currentVersionName != mContext?.getPackageInfo()?.versionName)) {
-          return DEFAULT_BUNDLE
-        }
-        return pathBundle!!
+        return DEFAULT_BUNDLE
       }
+      return pathBundle!!
+    }
   }
 }
